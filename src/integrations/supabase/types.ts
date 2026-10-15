@@ -14,16 +14,219 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      orders: {
+        Row: {
+          address_line: string | null
+          city: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          pincode: string | null
+          product_emoji: string
+          product_id: string | null
+          product_name: string
+          spin_id: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address_line?: string | null
+          city?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          pincode?: string | null
+          product_emoji?: string
+          product_id?: string | null
+          product_name: string
+          spin_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address_line?: string | null
+          city?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          pincode?: string | null
+          product_emoji?: string
+          product_id?: string | null
+          product_name?: string
+          spin_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_spin_id_fkey"
+            columns: ["spin_id"]
+            isOneToOne: false
+            referencedRelation: "spins"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          active: boolean
+          created_at: string
+          emoji: string
+          id: string
+          image_url: string | null
+          level: number
+          name: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          emoji?: string
+          id?: string
+          image_url?: string | null
+          level: number
+          name: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          emoji?: string
+          id?: string
+          image_url?: string | null
+          level?: number
+          name?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          coins: number
+          created_at: string
+          free_spins: number
+          games_played: number
+          id: string
+          name: string
+          referral_code: string
+          referred_by: string | null
+        }
+        Insert: {
+          coins?: number
+          created_at?: string
+          free_spins?: number
+          games_played?: number
+          id: string
+          name?: string
+          referral_code?: string
+          referred_by?: string | null
+        }
+        Update: {
+          coins?: number
+          created_at?: string
+          free_spins?: number
+          games_played?: number
+          id?: string
+          name?: string
+          referral_code?: string
+          referred_by?: string | null
+        }
+        Relationships: []
+      }
+      spins: {
+        Row: {
+          cost: number
+          created_at: string
+          id: string
+          level: number
+          product_id: string | null
+          user_id: string
+          won: boolean
+        }
+        Insert: {
+          cost: number
+          created_at?: string
+          id?: string
+          level: number
+          product_id?: string | null
+          user_id: string
+          won: boolean
+        }
+        Update: {
+          cost?: number
+          created_at?: string
+          id?: string
+          level?: number
+          product_id?: string | null
+          user_id?: string
+          won?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "spins_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      referral_count: { Args: never; Returns: number }
+      spin_wheel: { Args: { _level: number }; Returns: Json }
+      submit_address: {
+        Args: {
+          _address: string
+          _city: string
+          _full_name: string
+          _order_id: string
+          _phone: string
+          _pincode: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +353,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
