@@ -10,33 +10,118 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedHomeRouteImport } from './routes/_authenticated/home'
+import { Route as AuthenticatedOrdersRouteImport } from './routes/_authenticated/orders'
+import { Route as AuthenticatedReferRouteImport } from './routes/_authenticated/refer'
+import { Route as AuthenticatedClaimOrderIdRouteImport } from './routes/_authenticated/claim.$orderId'
+import { Route as AuthenticatedSpinLevelRouteImport } from './routes/_authenticated/spin.$level'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedHomeRoute = AuthenticatedHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedOrdersRoute = AuthenticatedOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReferRoute = AuthenticatedReferRouteImport.update({
+  id: '/refer',
+  path: '/refer',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedClaimOrderIdRoute =
+  AuthenticatedClaimOrderIdRouteImport.update({
+    id: '/claim/$orderId',
+    path: '/claim/$orderId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedSpinLevelRoute = AuthenticatedSpinLevelRouteImport.update({
+  id: '/spin/$level',
+  path: '/spin/$level',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/home': typeof AuthenticatedHomeRoute
+  '/orders': typeof AuthenticatedOrdersRoute
+  '/refer': typeof AuthenticatedReferRoute
+  '/claim/$orderId': typeof AuthenticatedClaimOrderIdRoute
+  '/spin/$level': typeof AuthenticatedSpinLevelRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/home': typeof AuthenticatedHomeRoute
+  '/orders': typeof AuthenticatedOrdersRoute
+  '/refer': typeof AuthenticatedReferRoute
+  '/claim/$orderId': typeof AuthenticatedClaimOrderIdRoute
+  '/spin/$level': typeof AuthenticatedSpinLevelRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/home': typeof AuthenticatedHomeRoute
+  '/_authenticated/orders': typeof AuthenticatedOrdersRoute
+  '/_authenticated/refer': typeof AuthenticatedReferRoute
+  '/_authenticated/claim/$orderId': typeof AuthenticatedClaimOrderIdRoute
+  '/_authenticated/spin/$level': typeof AuthenticatedSpinLevelRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/home'
+    | '/orders'
+    | '/refer'
+    | '/claim/$orderId'
+    | '/spin/$level'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/admin'
+    | '/home'
+    | '/orders'
+    | '/refer'
+    | '/claim/$orderId'
+    | '/spin/$level'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/_authenticated/admin'
+    | '/_authenticated/home'
+    | '/_authenticated/orders'
+    | '/_authenticated/refer'
+    | '/_authenticated/claim/$orderId'
+    | '/_authenticated/spin/$level'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +133,82 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/home': {
+      id: '/_authenticated/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof AuthenticatedHomeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/orders': {
+      id: '/_authenticated/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof AuthenticatedOrdersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/refer': {
+      id: '/_authenticated/refer'
+      path: '/refer'
+      fullPath: '/refer'
+      preLoaderRoute: typeof AuthenticatedReferRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/claim/$orderId': {
+      id: '/_authenticated/claim/$orderId'
+      path: '/claim/$orderId'
+      fullPath: '/claim/$orderId'
+      preLoaderRoute: typeof AuthenticatedClaimOrderIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/spin/$level': {
+      id: '/_authenticated/spin/$level'
+      path: '/spin/$level'
+      fullPath: '/spin/$level'
+      preLoaderRoute: typeof AuthenticatedSpinLevelRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedHomeRoute: typeof AuthenticatedHomeRoute
+  AuthenticatedOrdersRoute: typeof AuthenticatedOrdersRoute
+  AuthenticatedReferRoute: typeof AuthenticatedReferRoute
+  AuthenticatedClaimOrderIdRoute: typeof AuthenticatedClaimOrderIdRoute
+  AuthenticatedSpinLevelRoute: typeof AuthenticatedSpinLevelRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedHomeRoute: AuthenticatedHomeRoute,
+  AuthenticatedOrdersRoute: AuthenticatedOrdersRoute,
+  AuthenticatedReferRoute: AuthenticatedReferRoute,
+  AuthenticatedClaimOrderIdRoute: AuthenticatedClaimOrderIdRoute,
+  AuthenticatedSpinLevelRoute: AuthenticatedSpinLevelRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
