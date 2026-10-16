@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import hero from "@/assets/wheel-hero.png";
 
 export const Route = createFileRoute("/")({
-  validateSearch: (s: Record<string, unknown>) => ({ ref: typeof s.ref === "string" ? s.ref : undefined }),
+  validateSearch: (s: Record<string, unknown>): { ref?: string | undefined } => ({ ref: typeof s["ref"] === "string" ? (s["ref"] as string) : undefined }),
   head: () => ({
     meta: [
       { title: "Spin & Win — Spin the wheel, win real products" },

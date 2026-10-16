@@ -31,7 +31,7 @@ function ClaimPage() {
       _order_id: orderId, _full_name: f.name, _phone: f.phone, _address: f.address, _city: f.city, _pincode: f.pincode,
     });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Order confirmed! We'll deliver soon.");
     qc.invalidateQueries({ queryKey: ["orders"] });
     navigate({ to: "/orders" });

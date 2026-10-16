@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Spin outcomes, coin deductions and address submission run in Postgres security-definer functions (spin_wheel, submit_address); why: clients must never decide wins or edit balances.
