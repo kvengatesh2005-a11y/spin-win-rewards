@@ -22,7 +22,7 @@ export function Wheel({ segments, rotation, spinning }: { segments: Segment[]; r
         {segments.map((s, i) => {
           const [x1, y1] = pt(i * a);
           const [x2, y2] = pt((i + 1) * a);
-          const [tx, ty] = pt(i * a + a / 2, 100);
+          const [tx = 0, ty = 0] = pt(i * a + a / 2, 100);
           return (
             <g key={i}>
               <path d={`M160 160 L${x1} ${y1} A${r} ${r} 0 0 1 ${x2} ${y2} Z`} fill={s.win ? FILLS[i % 4] : "var(--muted)"} stroke="var(--gold)" strokeWidth="3" />

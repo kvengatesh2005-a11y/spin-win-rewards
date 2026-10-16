@@ -42,7 +42,7 @@ function SpinPage() {
     if (spinning) return;
     setResult(null);
     const { data, error } = await supabase.rpc("spin_wheel", { _level: level });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     const r = data as unknown as Result;
     let idx = r.won ? segments.findIndex((s) => s.win && s.label === r.product_name) : segments.findIndex((s) => !s.win);
     if (idx < 0) idx = 0;

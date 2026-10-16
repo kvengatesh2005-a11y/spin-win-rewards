@@ -39,7 +39,7 @@ function Orders() {
   });
   async function setStatus(id: string, status: string) {
     const { error } = await supabase.from("orders").update({ status, updated_at: new Date().toISOString() }).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["admin-orders"] });
   }
   if (!data.length) return <p className="text-center text-muted-foreground">No orders yet.</p>;
@@ -73,7 +73,7 @@ function Products() {
   async function add(e: React.FormEvent) {
     e.preventDefault();
     const { error } = await supabase.from("products").insert({ name, emoji, level });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setName(""); refresh();
   }
   async function toggle(id: string, active: boolean) { await supabase.from("products").update({ active }).eq("id", id); refresh(); }
